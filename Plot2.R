@@ -16,3 +16,12 @@ ggplot(data= sumEmissionsBal,aes(year,Emissions/1000))+
     labs(title="Total Emissions of PM2.5 in Baltimore City", x = "Year", y = "Emissions of PM2.5 (K.Tons)")+
     geom_text(aes(label = paste(format(Emissions/1000, nsmall = 1))),vjust = -0.5)
 dev.off()
+
+total_emi_24510 <- NEI %>%
+    filter(fips == 24510) %>%
+    select(fips, Emissions, year) %>%
+    group_by(year) %>%
+    summarise(Total_Emissions = sum(Emissions, na.rm = TRUE))
+png("plot2.png")
+plot(x = total_emi_24510$year, y = total_emi_24510$Total_Emissions, type = "l", col = "red", xlab = "Year", ylab = "Emissions (Ton)", main = "Total Emissions From All Sources in Baltimore City, Maryland" )
+dev.off()

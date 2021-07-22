@@ -15,3 +15,11 @@ options(digits=2)
     labs(title="Total Emissions of PM2.5", x = "Year", y = "PM2.5 (K.Tons)")+
     geom_text(aes(label = paste(format(Emissions/1000, nsmall = 1))),vjust = -0.5, nudge_y = 4)
 dev.off()
+
+total_emi <- NEI %>%
+    select(Emissions, year) %>%
+    group_by(year) %>%
+    summarise(Total_Emissions = sum(Emissions, na.rm = TRUE))
+png("plot1.png")
+plot(total_emi)
+dev.off()
